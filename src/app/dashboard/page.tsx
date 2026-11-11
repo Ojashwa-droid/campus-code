@@ -1,5 +1,3 @@
-"use client";
-
 import { useState } from "react";
 import { SAMPLE_REPORT, SAMPLE_GRAPH_NODES } from "@/lib/api";
 import { DimensionScore } from "@/lib/types";

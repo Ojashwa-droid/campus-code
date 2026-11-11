@@ -1,7 +1,5 @@
-"use client";
-
 import { useEffect, useRef, useState } from "react";
-import Link from "next/link";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { 
   GitBranch, 
@@ -217,7 +215,7 @@ export default function ProductPage() {
               </div>
               <h3 className="text-sm font-semibold text-white">Engineering Dossier</h3>
               <p className="mt-2 text-xs leading-relaxed text-zinc-500 font-sans">Six evidence-backed dimensions, code citations, and an architecture profile.</p>
-              <Link href="/dashboard" className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-zinc-900 px-4 py-2.5 text-xs font-medium text-zinc-200 transition hover:border-emerald-300/30 hover:text-white">
+              <Link to="/dashboard" className="mt-5 inline-flex items-center justify-center gap-2 rounded-lg border border-white/10 bg-zinc-900 px-4 py-2.5 text-xs font-medium text-zinc-200 transition hover:border-emerald-300/30 hover:text-white">
                 View Engineering Dossier <ArrowRight className="h-3.5 w-3.5" />
               </Link>
             </div>

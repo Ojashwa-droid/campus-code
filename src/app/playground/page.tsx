@@ -1,6 +1,5 @@
-"use client";
-
 import { useState } from "react";
+import { Link } from "react-router-dom";
 import { 
   Terminal, 
   ExternalLink, 
@@ -210,11 +209,11 @@ export default function PlaygroundPage() {
                   Open GitHub <ExternalLink className="h-3 w-3" />
                 </Button>
               </a>
-              <a href="/product">
+              <Link to="/product">
                 <Button variant="glass" size="sm" className="text-xs gap-1.5">
                   <Sparkles className="h-3 w-3" /> Analyze In Ingestion
                 </Button>
-              </a>
+              </Link>
             </div>
           </div>
         </div>

@@ -1,10 +1,11 @@
 # Dependencies
 /node_modules/
 
-# Next.js build output and local caches
+# Build output and local caches
 /.next/
 /out/
 /build/
+/dist/
 
 # TypeScript incremental build state
 *.tsbuildinfo

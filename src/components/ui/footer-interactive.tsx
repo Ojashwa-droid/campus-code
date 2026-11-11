@@ -1,8 +1,5 @@
-"use client";
-
 import React, { useState } from "react";
-import Link from "next/link";
-import Image from "next/image";
+import { Link } from "react-router-dom";
 import { 
   Send, 
   MessageSquare, 
@@ -58,7 +55,7 @@ export default function FooterInteractive() {
           <div className="md:col-span-1 space-y-3">
             <div className="flex items-center gap-2">
               <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-zinc-900 border border-white/10">
-                <Image
+                <img
                   src="/assets/logo.png"
                   alt="CampusCode"
                   width={18}
@@ -86,22 +83,22 @@ export default function FooterInteractive() {
             </h4>
             <ul className="space-y-1.5 text-xs font-mono-accent">
               <li>
-                <Link href="/" className="hover:text-white transition-colors">
+                <Link to="/" className="hover:text-white transition-colors">
                   Overview
                 </Link>
               </li>
               <li>
-                <Link href="/product" className="hover:text-white transition-colors">
+                <Link to="/product" className="hover:text-white transition-colors">
                   Analyze Repository
                 </Link>
               </li>
               <li>
-                <Link href="/dashboard" className="hover:text-white transition-colors">
+                <Link to="/dashboard" className="hover:text-white transition-colors">
                   Engineering Dossier
                 </Link>
               </li>
               <li>
-                <Link href="/playground" className="hover:text-white transition-colors">
+                <Link to="/playground" className="hover:text-white transition-colors">
                   Simulator
                 </Link>
               </li>

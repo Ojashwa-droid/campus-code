@@ -1,7 +1,7 @@
-import Link from "next/link";
+import { lazy, Suspense } from "react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { FeatureCard } from "@/components/ui/feature-card";
-import { RainbowPrismWave } from "@/components/ui/rainbow-prism-wave";
 import { 
   Terminal, 
   Layers, 
@@ -20,6 +20,12 @@ import {
   FileCode2
 } from "lucide-react";
 
+const RainbowPrismWave = lazy(() =>
+  import("@/components/ui/rainbow-prism-wave").then((module) => ({
+    default: module.RainbowPrismWave,
+  })),
+);
+
 export default function Home() {
   return (
     <div className="relative isolate min-h-screen overflow-hidden">
@@ -31,7 +37,9 @@ export default function Home() {
           WebkitMaskImage: "linear-gradient(to bottom, black 60%, transparent 100%)",
         }}
       >
-        <RainbowPrismWave />
+        <Suspense fallback={null}>
+          <RainbowPrismWave />
+        </Suspense>
       </div>
 
       {/* Hero Section */}
@@ -51,19 +59,19 @@ export default function Home() {
 
         {/* High-contrast Sleek CTA Buttons */}
         <div className="flex flex-wrap items-center justify-center gap-3">
-          <Link href="/product">
+          <Link to="/product">
             <Button size="lg" variant="default" className="gap-2 text-xs font-semibold h-11 px-6 shadow-glow-white">
               <Sparkles className="h-3.5 w-3.5" />
               Analyze Repository
             </Button>
           </Link>
-          <Link href="/dashboard">
+          <Link to="/dashboard">
             <Button size="lg" variant="glass" className="gap-2 text-xs font-medium h-11 px-6">
               <BarChart3 className="h-3.5 w-3.5 text-zinc-400" />
               View Engineering Dossier
             </Button>
           </Link>
-          <Link href="/playground">
+          <Link to="/playground">
             <Button size="lg" variant="outline" className="gap-2 text-xs font-medium h-11 px-5">
               <Terminal className="h-3.5 w-3.5 text-zinc-400" />
               Simulator
@@ -387,7 +395,7 @@ export default function Home() {
             <p className="flex-1 font-sans text-sm leading-7 text-zinc-300">
               Automate the technical vetting of your graduating cohorts. Generate standardized, unbiased engineering dossiers for every student, drastically reducing the manual overhead for professors and placement officers.
             </p>
-            <Link href="/product">
+            <Link to="/product">
               <Button variant="glass" size="sm" className="w-full gap-2 text-xs">
                 Analyze Repository <ChevronRight className="h-3 w-3" />
               </Button>
@@ -404,7 +412,7 @@ export default function Home() {
             <p className="flex-1 font-sans text-sm leading-7 text-zinc-300">
               Skip the initial technical screening call. Recruiters can instantly verify a candidate&apos;s proficiency in reactive streaming, modular coupling, or dependency injection before a single interview is scheduled. Every claim in the dossier links directly back to the candidate&apos;s source code.
             </p>
-            <Link href="/dashboard">
+            <Link to="/dashboard">
               <Button variant="glass" size="sm" className="w-full gap-2 text-xs">
                 Inspect Sample Dossier <ChevronRight className="h-3 w-3" />
               </Button>

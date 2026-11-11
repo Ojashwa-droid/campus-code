@@ -1,8 +1,4 @@
-"use client";
-
-import Link from "next/link";
-import { usePathname } from "next/navigation";
-import Image from "next/image";
+import { Link, useLocation } from "react-router-dom";
 import { Button } from "./button";
 import { 
   FileCode2, 
@@ -15,7 +11,7 @@ import {
 import { useState } from "react";
 
 export function Header() {
-  const pathname = usePathname();
+  const { pathname } = useLocation();
   const [mobileOpen, setMobileOpen] = useState(false);
 
   const navLinks = [
@@ -30,9 +26,9 @@ export function Header() {
       <div className="mx-auto flex h-14 max-w-6xl items-center justify-between px-4 sm:px-6">
         
         {/* Brand */}
-        <Link href="/" className="flex items-center gap-2.5 group">
+        <Link to="/" className="flex items-center gap-2.5 group">
           <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-zinc-900 border border-white/10 group-hover:border-white/25 transition-colors">
-            <Image
+            <img
               src="/assets/logo.png"
               alt="CampusCode Logo"
               width={18}
@@ -55,7 +51,7 @@ export function Header() {
             return (
               <Link
                 key={link.href}
-                href={link.href}
+                to={link.href}
                 className={`px-3 py-1.5 text-xs font-mono-accent font-medium rounded-lg transition-colors ${
                   isActive
                     ? "text-white bg-zinc-900 border border-white/10"
@@ -81,7 +77,7 @@ export function Header() {
             <ExternalLink className="h-2.5 w-2.5 opacity-50" />
           </a>
 
-          <Link href="/product">
+          <Link to="/product">
             <Button size="sm" variant="default" className="text-xs h-8 px-3.5 gap-1.5 font-medium">
               Analyze Repository
               <ChevronRight className="h-3 w-3" />
@@ -107,7 +103,7 @@ export function Header() {
           {navLinks.map((link) => (
             <Link
               key={link.href}
-              href={link.href}
+              to={link.href}
               onClick={() => setMobileOpen(false)}
               className="block px-3 py-2 text-xs font-mono-accent font-medium rounded-lg text-zinc-400 hover:text-white hover:bg-zinc-900"
             >
@@ -115,7 +111,7 @@ export function Header() {
             </Link>
           ))}
           <div className="pt-3 border-t border-white/10 flex flex-col gap-2">
-            <Link href="/product" onClick={() => setMobileOpen(false)}>
+            <Link to="/product" onClick={() => setMobileOpen(false)}>
               <Button size="sm" variant="default" className="w-full text-xs">
                 Analyze Repository
               </Button>
