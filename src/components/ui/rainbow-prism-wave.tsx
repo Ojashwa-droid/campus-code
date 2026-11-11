@@ -120,14 +120,15 @@ export function RainbowPrismWave() {
 
     window.addEventListener("resize", onResize);
 
-    // --- Animation Loop ---
+    const reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     let animationFrameId: number;
     const animate = () => {
       uniforms.time.value += 0.007; // Smooth ambient progression
       renderer.render(scene, camera);
       animationFrameId = requestAnimationFrame(animate);
     };
-    animate();
+    if (reducedMotion) renderer.render(scene, camera);
+    else animate();
 
     return () => {
       cancelAnimationFrame(animationFrameId);
@@ -142,6 +143,7 @@ export function RainbowPrismWave() {
     <canvas
       ref={canvasRef}
       className="pointer-events-none absolute inset-0 z-0 h-full w-full opacity-30 mix-blend-screen"
+      aria-hidden="true"
     />
   );
 }

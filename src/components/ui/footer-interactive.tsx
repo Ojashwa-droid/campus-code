@@ -1,261 +1,55 @@
-import React, { useState } from "react";
+import { FormEvent, useState } from "react";
 import { Link } from "react-router-dom";
-import { 
-  Send, 
-  MessageSquare, 
-  CheckCircle2, 
-  ExternalLink,
-  Lock,
-  Terminal,
-  Sparkles
-} from "lucide-react";
+import { MessageSquare, Send, X } from "lucide-react";
 
 export default function FooterInteractive() {
   const [email, setEmail] = useState("");
-  const [subscribed, setSubscribed] = useState(false);
+  const [emailNote, setEmailNote] = useState("");
   const [chatOpen, setChatOpen] = useState(false);
-  const [chatMessages, setChatMessages] = useState([
-    { from: "bot", text: "This assistant preview uses sample responses. Ask about repository analysis, knowledge graphs, or source citations." }
-  ]);
-  const [inputMsg, setInputMsg] = useState("");
+  const [messages, setMessages] = useState([{ from: "assistant", text: "This is a sample assistant. Ask how the evidence reader works." }]);
+  const [message, setMessage] = useState("");
 
-  const handleSubscribe = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) return;
-    setSubscribed(true);
-    setTimeout(() => {
-      setEmail("");
-    }, 2000);
+  const subscribe = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    setEmailNote(email ? "This preview does not send email yet." : "Enter an email address to preview validation.");
   };
-
-  const handleSendMessage = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!inputMsg.trim()) return;
-    const userMsg = inputMsg;
-    setChatMessages((prev) => [...prev, { from: "user", text: userMsg }]);
-    setInputMsg("");
-
-    setTimeout(() => {
-      setChatMessages((prev) => [
-        ...prev,
-        {
-          from: "bot",
-          text: `Sample response: CampusCode uses Eclipse JGit to clone repositories, Cognee (FastAPI) to map AST relationships into KùzuDB, and LanceDB for vector retrieval. In a full analysis, claims are linked to source locations.`
-        }
-      ]);
-    }, 500);
+  const send = (event: FormEvent<HTMLFormElement>) => {
+    event.preventDefault();
+    if (!message.trim()) return;
+    setMessages((items) => [...items, { from: "user", text: message }, { from: "assistant", text: "Sample answer: CampusCode connects claims to repository paths and line ranges so reviewers can inspect the source evidence." }]);
+    setMessage("");
   };
 
   return (
-    <footer className="relative border-t border-white/[0.08] bg-black text-zinc-400 pt-16 pb-12 overflow-hidden">
-      <div className="mx-auto max-w-5xl px-4 sm:px-6">
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-8 pb-12 border-b border-white/[0.08]">
-          
-          {/* Brand Column */}
-          <div className="md:col-span-1 space-y-3">
-            <div className="flex items-center gap-2">
-              <div className="flex h-7 w-7 items-center justify-center rounded-lg bg-zinc-900 border border-white/10">
-                <img
-                  src="/assets/logo.png"
-                  alt="CampusCode"
-                  width={18}
-                  height={18}
-                  className="invert opacity-90"
-                />
-              </div>
-              <span className="text-sm font-semibold tracking-tight text-white">
-                CAMPUS CODE
-              </span>
-            </div>
-            <p className="text-xs text-zinc-500 leading-relaxed font-sans">
-              AI-Powered Student Code Portfolio & Architecture Analyzer. Transforming student GitHub repositories into verifiable Engineering Profiles.
-            </p>
-            <div className="flex items-center gap-2 pt-1 text-[11px] text-zinc-400">
-              <span className="h-1.5 w-1.5 rounded-full bg-emerald-400" />
-              <span>100% Local Privacy</span>
-            </div>
-          </div>
-
-          {/* Quick Links */}
-          <div className="space-y-2.5">
-            <h4 className="text-xs font-mono-accent font-medium text-white uppercase tracking-widest">
-              Navigation
-            </h4>
-            <ul className="space-y-1.5 text-xs font-mono-accent">
-              <li>
-                <Link to="/" className="hover:text-white transition-colors">
-                  Overview
-                </Link>
-              </li>
-              <li>
-                <Link to="/product" className="hover:text-white transition-colors">
-                  Analyze Repository
-                </Link>
-              </li>
-              <li>
-                <Link to="/dashboard" className="hover:text-white transition-colors">
-                  Engineering Dossier
-                </Link>
-              </li>
-              <li>
-                <Link to="/playground" className="hover:text-white transition-colors">
-                  Simulator
-                </Link>
-              </li>
-              <li>
-                <a 
-                  href="https://documenter.getpostman.com/view/41403866/2sBYHYuy7j" 
-                  target="_blank" 
-                  rel="noopener noreferrer"
-                  className="hover:text-white transition-colors inline-flex items-center gap-1 text-zinc-300"
-                >
-                  Postman API Docs <ExternalLink className="h-2.5 w-2.5 opacity-60" />
-                </a>
-              </li>
-            </ul>
-          </div>
-
-          {/* Tech Stack */}
-          <div className="space-y-2.5">
-            <h4 className="text-xs font-mono-accent font-medium text-white uppercase tracking-widest">
-              Core Stack
-            </h4>
-            <div className="grid grid-cols-2 gap-1.5 text-[11px] font-mono-accent">
-              <div className="p-2 rounded-lg bg-zinc-950 border border-white/5">
-                <div className="text-white text-[10px]">Backend</div>
-                <div className="text-zinc-500 text-[9px]">Spring Boot</div>
-              </div>
-              <div className="p-2 rounded-lg bg-zinc-950 border border-white/5">
-                <div className="text-white text-[10px]">Graph DB</div>
-                <div className="text-zinc-500 text-[9px]">KùzuDB</div>
-              </div>
-              <div className="p-2 rounded-lg bg-zinc-950 border border-white/5">
-                <div className="text-white text-[10px]">Vector DB</div>
-                <div className="text-zinc-500 text-[9px]">LanceDB</div>
-              </div>
-              <div className="p-2 rounded-lg bg-zinc-950 border border-white/5">
-                <div className="text-white text-[10px]">LLM Engine</div>
-                <div className="text-zinc-500 text-[9px]">Ollama (Local)</div>
-              </div>
-            </div>
-          </div>
-
-          {/* Newsletter */}
-          <div className="space-y-2.5">
-            <h4 className="text-xs font-mono-accent font-medium text-white uppercase tracking-widest">
-              Cohort Updates
-            </h4>
-            <p className="text-xs text-zinc-500 font-sans">
-              Get notified when university engineering profiles are published.
-            </p>
-            <form onSubmit={handleSubscribe} className="space-y-2">
-              <div className="relative">
-                <input
-                  type="email"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="recruiter@company.com"
-                  required
-                  className="w-full rounded-lg border border-white/10 bg-zinc-950 px-3 py-1.5 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-white/20"
-                />
-                <button
-                  type="submit"
-                  className="absolute right-1 top-1 bottom-1 px-2 rounded-md bg-white text-black text-xs font-semibold hover:bg-white/90 transition-colors flex items-center justify-center"
-                >
-                  <Send className="h-3 w-3" />
-                </button>
-              </div>
-              {subscribed && (
-                <p className="flex items-center gap-1 text-[11px] text-emerald-400">
-                  <CheckCircle2 className="h-3 w-3" /> Subscribed
-                </p>
-              )}
-            </form>
-          </div>
-
+    <footer className="border-t border-[var(--color-rule)] bg-[color:var(--color-source)]">
+      <div className="cc-container grid gap-10 py-16 md:grid-cols-[1.5fr_1fr_1fr]">
+        <div>
+          <div className="flex items-center gap-2"><img src="/assets/logo.png" alt="" width={24} height={24} className="h-6 w-6 invert" /><span className="cc-title text-base">CampusCode</span></div>
+          <p className="cc-copy mt-4 max-w-md">Repository-grounded engineering evidence for recruiters and university placement teams.</p>
         </div>
-
-        {/* Bottom bar */}
-        <div className="flex flex-col items-center justify-between gap-3 pt-6 text-xs text-zinc-600 sm:flex-row">
-          <div className="flex items-center gap-2">
-            <span className="text-zinc-400">CAMPUS CODE</span>
-            <span>•</span>
-            <span>SRM University Delhi-NCR</span>
-          </div>
-          <div>
-            © {new Date().getFullYear()} CampusCode Project.
-          </div>
+        <div>
+          <p className="cc-label">Navigate</p>
+          <nav className="mt-3 grid gap-2 text-sm"><Link className="cc-link" to="/dashboard">View sample dossier</Link><Link className="cc-link" to="/product">Analyze repository</Link><Link className="cc-link" to="/playground">Open simulator</Link><a className="cc-link" href="https://documenter.getpostman.com/view/41403866/2sBYHYuy7j" target="_blank" rel="noopener noreferrer">API docs</a></nav>
+        </div>
+        <div>
+          <p className="cc-label">Cohort updates</p>
+          <p className="cc-copy mt-3">A preview form for future placement-cell announcements.</p>
+          <form onSubmit={subscribe} className="mt-4 grid gap-2">
+            <label className="sr-only" htmlFor="cohort-email">Email address</label>
+            <div className="flex flex-col gap-2 sm:flex-row"><input className="cc-input" id="cohort-email" type="email" value={email} onChange={(event) => setEmail(event.target.value)} placeholder="recruiter@company.com" /><button className="cc-button cc-button--primary" type="submit"><Send className="h-3.5 w-3.5" /> Check email</button></div>
+            <p aria-live="polite" className="cc-label min-h-[1.4em]">{emailNote}</p>
+          </form>
         </div>
       </div>
+      <div className="border-t border-[var(--color-rule)]"><div className="cc-container flex flex-col gap-2 py-5 text-xs text-[color:var(--color-muted)] sm:flex-row sm:items-center sm:justify-between"><span>CampusCode Project</span><span>SRM University Delhi-NCR</span></div></div>
 
-      {/* Floating Interactive Assistant macOS Chat Window */}
       <div className="fixed bottom-5 right-5 z-50">
-        {!chatOpen ? (
-          <button
-            onClick={() => setChatOpen(true)}
-          className="flex items-center gap-2 rounded-full bg-white px-2.5 py-2 text-xs font-semibold text-black shadow-glow-white hover:bg-white/95 transition-all lg:px-3.5"
-            aria-label="Open AI Assistant"
-          >
-            <MessageSquare className="h-3.5 w-3.5" />
-            <span className="hidden lg:inline">Ask CampusCode AI</span>
-          </button>
-        ) : (
-          <div className="w-80 rounded-2xl border border-white/10 bg-[#0c0c0c] shadow-2xl overflow-hidden">
-            {/* macOS title bar */}
-            <div className="flex items-center justify-between border-b border-white/[0.08] bg-[#111] px-3.5 py-2.5">
-              <div className="flex items-center gap-1.5">
-                <div className="h-2 w-2 rounded-full bg-[#ff5f56]" />
-                <div className="h-2 w-2 rounded-full bg-[#ffbd2e]" />
-                <div className="h-2 w-2 rounded-full bg-[#27c93f]" />
-                <span className="ml-2 text-[11px] font-mono-accent text-zinc-400">
-                  Assistant Preview
-                </span>
-              </div>
-              <button
-                onClick={() => setChatOpen(false)}
-                className="text-zinc-500 hover:text-white text-xs"
-              >
-                ✕
-              </button>
-            </div>
-
-            {/* Messages */}
-            <div className="p-3 h-56 overflow-y-auto space-y-2 text-xs font-sans">
-              {chatMessages.map((m, idx) => (
-                <div
-                  key={idx}
-                  className={`flex ${m.from === "user" ? "justify-end" : "justify-start"}`}
-                >
-                  <div
-                    className={`max-w-[85%] rounded-xl p-2.5 leading-relaxed text-xs ${
-                      m.from === "user"
-                        ? "bg-white text-black font-medium"
-                        : "bg-zinc-900 border border-white/10 text-zinc-300"
-                    }`}
-                  >
-                    {m.text}
-                  </div>
-                </div>
-              ))}
-            </div>
-
-            {/* Input */}
-            <form onSubmit={handleSendMessage} className="border-t border-white/[0.08] p-2 flex gap-1.5 bg-black">
-              <input
-                type="text"
-                value={inputMsg}
-                onChange={(e) => setInputMsg(e.target.value)}
-                placeholder="Ask about graph analysis..."
-                className="flex-1 rounded-lg border border-white/10 bg-[#0c0c0c] px-2.5 py-1.5 text-xs text-white placeholder:text-zinc-600 focus:outline-none focus:ring-1 focus:ring-white/20 font-sans"
-              />
-              <button
-                type="submit"
-                className="rounded-lg bg-white px-2.5 py-1.5 text-xs font-semibold text-black hover:bg-white/90"
-              >
-                <Send className="h-3 w-3" />
-              </button>
-            </form>
-          </div>
+        {!chatOpen ? <button type="button" onClick={() => setChatOpen(true)} className="cc-button cc-button--primary min-h-11"><MessageSquare className="h-4 w-4" /> Ask CampusCode</button> : (
+          <section aria-label="Sample assistant" className="cc-panel w-[min(22rem,calc(100vw-2.5rem))] overflow-hidden">
+            <header className="flex items-center justify-between border-b border-[var(--color-rule)] px-4 py-3"><span className="cc-label">Sample assistant</span><button type="button" onClick={() => setChatOpen(false)} className="cc-button cc-button--quiet min-h-8 w-8 border-0 px-0" aria-label="Close assistant"><X className="h-3.5 w-3.5" /></button></header>
+            <div className="max-h-56 space-y-3 overflow-y-auto p-4">{messages.map((item, index) => <p key={index} className={`rounded-[var(--radius-control)] border p-3 text-xs leading-relaxed ${item.from === "user" ? "border-[var(--color-recruiter)] bg-[color:var(--color-recruiter-soft)] text-[color:var(--color-ink)]" : "border-[var(--color-rule)] bg-[color:var(--color-source)] text-[color:var(--color-ink-soft)]"}`}>{item.text}</p>)}</div>
+            <form onSubmit={send} className="flex gap-2 border-t border-[var(--color-rule)] p-3"><label className="sr-only" htmlFor="assistant-message">Ask the sample assistant</label><input className="cc-input min-w-0" id="assistant-message" value={message} onChange={(event) => setMessage(event.target.value)} placeholder="Ask about evidence" /><button className="cc-button cc-button--primary min-h-12 w-12 px-0" type="submit" aria-label="Send question"><Send className="h-4 w-4" /></button></form>
+          </section>
         )}
       </div>
     </footer>
