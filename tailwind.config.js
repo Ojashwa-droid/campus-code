@@ -46,8 +46,9 @@ module.exports = {
         sm: "0.25rem",
       },
       fontFamily: {
-        sans: ["var(--font-inter)", "Inter", "ui-sans-serif", "system-ui", "sans-serif"],
-        "mono-accent": ["AWS Diatype Rounded Mono", "Cascadia Code", "SF Mono", "Menlo", "monospace"],
+        sans: ["var(--font-jetbrains-mono)", "JetBrains Mono", "ui-monospace", "monospace"],
+        mono: ["var(--font-jetbrains-mono)", "JetBrains Mono", "ui-monospace", "monospace"],
+        "mono-accent": ["var(--font-jetbrains-mono)", "JetBrains Mono", "ui-monospace", "monospace"],
         "mono-code": ["var(--font-jetbrains-mono)", "JetBrains Mono", "ui-monospace", "monospace"],
       },
       boxShadow: {
